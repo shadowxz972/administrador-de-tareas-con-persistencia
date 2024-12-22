@@ -1,7 +1,14 @@
 import os
+import sys
 
-from .classes import TaskManager
-from .functions.utils import menu, add_task_helper, del_task_helper, upload_task_helper, menu_update, \
+# Para solucionar un bug de importacion
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.join(current_dir, '..')
+sys.path.append(project_root)
+
+from app.classes import TaskManager
+from app.classes import TaskManager
+from app.functions.utils import menu, add_task_helper, del_task_helper, upload_task_helper, menu_update, \
     update_name_helper, update_deadline_helper, update_description_helper, check_task_helper
 
 
