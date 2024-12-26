@@ -35,6 +35,8 @@ def main():
                         update_description_helper(manager)
                     case "3":
                         update_deadline_helper(manager)
+                    case "4":
+                        pass
                     case _:
                         print("Opcion invalida, intente denuevo")
             case "5":

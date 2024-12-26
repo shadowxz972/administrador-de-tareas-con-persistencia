@@ -17,6 +17,7 @@ def menu_update():
     print("1. Actualizar nombre")
     print("2. Actualizar descripcion")
     print("3. Actualizar fecha limite")
+    print("4. Regresar")
     return input("Ingrese su opcion: ")
 
 

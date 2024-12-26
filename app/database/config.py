@@ -8,7 +8,7 @@ DATABASE_URL = 'sqlite:///base.db'
 Base = declarative_base()
 
 # Crea el motor de conexion
-engine = create_engine(DATABASE_URL, echo=True)
+engine = create_engine(DATABASE_URL, echo=False)
 
 # Fabrica de sesiones
 Session = sessionmaker(bind=engine)

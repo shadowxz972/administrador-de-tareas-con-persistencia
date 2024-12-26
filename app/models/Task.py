@@ -10,7 +10,6 @@ from app.functions.validators import validate_str, validate_date
 
 def validate_string_field(value: str, field_name: str) -> str:
     if validate_str(value):
-        print(f"{field_name} cambiado correctamente")
         return value
     else:
         raise TypeError(f'El {field_name} debe ser un texto')

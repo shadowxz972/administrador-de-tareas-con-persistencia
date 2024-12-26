@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 def validate_str(value: str) -> bool:
-    return isinstance(value, str) and len(value) > 0
+    return isinstance(value, str) and len(value.strip()) > 0
 
 
 def validate_date(value: str | None) -> bool:
@@ -25,6 +25,7 @@ def get_valid_name(prompt="Ingrese nombre: ") -> str:
     while True:
         name = input(prompt)
         if validate_str(name):
+            name = name.strip()
             break
         print("Formato incorrecto, el nombre no puede estar vacio")
     return name
@@ -38,6 +39,7 @@ def get_valid_description(prompt="Ingrese descripcion: ") -> str:
     while True:
         description = input(prompt)
         if validate_str(description):
+            description = description.strip()
             break
         print("Formato incorrecto, la descripcion no puede estar vacio")
     return description
@@ -53,6 +55,7 @@ def get_valid_deadline(prompt="Ingrese fecha limite (No escriba nada si no hay):
         if not deadline:
             return None
         if validate_date(deadline):
+            deadline = deadline.strip()
             break
         print("Formato incorrecto, la fecha debe ser dd/mm/yyyy")
     return deadline
