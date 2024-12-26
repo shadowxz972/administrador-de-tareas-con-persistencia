@@ -7,15 +7,14 @@ project_root = os.path.join(current_dir, '..')
 sys.path.append(project_root)
 
 from app.classes import TaskManager
-from app.classes import TaskManager
-from app.functions.utils import menu, add_task_helper, del_task_helper, upload_task_helper, menu_update, \
-    update_name_helper, update_deadline_helper, update_description_helper, check_task_helper
+from app.functions.utils import menu, add_task_helper, del_task_helper, menu_update, \
+    update_name_helper, update_deadline_helper, update_description_helper, check_task_helper, show_tasks_helper
+from app.database.config import Session
 
 
 def main():
-    manager = TaskManager()
-
-    upload_task_helper(manager)
+    session = Session()
+    manager = TaskManager(session)
 
     while True:
         option = menu()
@@ -39,8 +38,9 @@ def main():
                     case _:
                         print("Opcion invalida, intente denuevo")
             case "5":
-                manager.show_tasks()
+                show_tasks_helper(manager)
             case "6":
+                session.close()
                 print("Saliendo...")
                 break
             case _:
@@ -48,4 +48,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as e:
+        print(f"Error inesperado: {e}")

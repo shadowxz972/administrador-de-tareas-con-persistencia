@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/pycharm,python,database
-# Edit at https://www.toptal.com/developers/gitignore?templates=pycharm,python,database
+# Created by https://www.toptal.com/developers/gitignore/api/python,pycharm,database,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,pycharm,database,visualstudiocode
 
 ### Database ###
 *.accdb
@@ -296,4 +296,23 @@ poetry.toml
 # LSP config files
 pyrightconfig.json
 
-# End of https://www.toptal.com/developers/gitignore/api/pycharm,python,database
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# End of https://www.toptal.com/developers/gitignore/api/python,pycharm,database,visualstudiocode

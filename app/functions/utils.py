@@ -1,6 +1,5 @@
-from app.classes import TaskManager, Task
-from app.dtos.taskDTO import TaskDTO
-from app.functions.database import add_task_to_db, delete_task_row, read_db, update_task_row
+from app.classes import TaskManager
+from app.models.Task import Task
 from .validators import get_valid_deadline, get_valid_name, get_valid_description
 
 
@@ -29,41 +28,55 @@ def add_task_helper(manager: TaskManager):
     name = get_valid_name()
     description = get_valid_description()
     deadline = get_valid_deadline()
-    dto = TaskDTO(name=name, description=description, deadline=deadline)
-    task_obj = Task(dto)
-    manager.add_task(task_obj)
-    add_task_to_db(task_obj)
+    task = Task(name=name, description=description, deadline=deadline)  # esto no puede botar error por las validaciones
+    try:
+        manager.add_task(task)
+    except ValueError as e:
+        print(f"Error: {e}")
 
 
 def del_task_helper(manager: TaskManager):
+    """
+    Borra una tarea con el nombre
+    :param manager:
+    :return:
+    """
     name = get_valid_name()
     try:
         task_obj = manager.find_task(name)
     except ValueError as e:
         print(e)
         return
-
     try:
         manager.del_task(task_obj)
-        delete_task_row(task_obj.id)
     except ValueError as e:
         print(e)
 
 
 def update_name_helper(manager: TaskManager):
+    """
+    Actualiza el nombre de una tarea
+    :param manager:
+    :return:
+    """
     new_name = get_valid_name("Ingrese nuevo nombre: ")
     old_name = get_valid_name("Ingrese antiguo nombre: ")
     try:
-        manager.rename_key(new_name, old_name)
+        task = manager.find_task(old_name)
+        if task.name == new_name:
+            raise ValueError("Nombre ya existente")
     except ValueError as e:
-        print(e)
+        print(f"Error: {e}")
         return
-    new_task = manager.find_task(new_name)
-    new_task.name = new_name
-    update_task_row(new_task.id, "name", new_name)
+    manager.rename_task(task, new_name)
 
 
 def update_description_helper(manager: TaskManager):
+    """
+    Actualiza el descripcion de una tarea
+    :param manager:
+    :return:
+    """
     name = get_valid_name("Ingrese nombre de la tarea: ")
     try:
         task_obj = manager.find_task(name)
@@ -71,11 +84,15 @@ def update_description_helper(manager: TaskManager):
         print(e)
         return
     new_description = get_valid_description("Ingrese nueva descripcion: ")
-    task_obj.description = new_description
-    update_task_row(task_obj.id, "description", new_description)
+    manager.change_description(task_obj, new_description)
 
 
 def update_deadline_helper(manager: TaskManager):
+    """
+    Actualiza la fecha de la tarea
+    :param manager:
+    :return:
+    """
     name = get_valid_name("Ingrese nombre de la tarea: ")
     try:
         task = manager.find_task(name)
@@ -83,26 +100,15 @@ def update_deadline_helper(manager: TaskManager):
         print(e)
         return
     new_deadline = get_valid_deadline()
-    task.deadline = new_deadline
-    update_task_row(task.id, "deadline", new_deadline)
-
-
-def upload_task_helper(manager: TaskManager):
-    tasks = read_db()
-    if tasks:
-        for task_obj in tasks:
-            task_id = task_obj[0]
-            task_name = task_obj[1]
-            task_deadline = task_obj[2]
-            task_description = task_obj[3]
-            task_status = task_obj[4]
-            dto = TaskDTO(id=task_id, name=task_name, description=task_description, deadline=task_deadline,
-                          is_completed=task_status)
-            new_task = Task(dto)
-            manager.add_task(new_task)
+    manager.change_deadline(task, new_deadline)
 
 
 def check_task_helper(manager: TaskManager):
+    """
+    Cambia el estado de una tarea dependiendo si esta completada o no
+    :param manager:
+    :return:
+    """
     name = get_valid_name("Ingrese nombre de la tarea: ")
     try:
         task_obj = manager.find_task(name)
@@ -110,4 +116,10 @@ def check_task_helper(manager: TaskManager):
         print(e)
         return
     manager.check_task(task_obj)
-    update_task_row(task_obj.id, "is_completed", task_obj.is_completed)
+
+
+def show_tasks_helper(manager: TaskManager):
+    try:
+        manager.show_tasks()
+    except ValueError as e:
+        print(f"Error: {e}")
