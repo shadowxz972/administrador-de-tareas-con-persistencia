@@ -11,4 +11,4 @@ Base = declarative_base()
 engine = create_engine(DATABASE_URL, echo=False)
 
 # Fabrica de sesiones
-Session = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(bind=engine)

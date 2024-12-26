@@ -9,11 +9,11 @@ sys.path.append(project_root)
 from app.classes import TaskManager
 from app.functions.utils import menu, add_task_helper, del_task_helper, menu_update, \
     update_name_helper, update_deadline_helper, update_description_helper, check_task_helper, show_tasks_helper
-from app.database.config import Session
+from app.database.config import SessionLocal
 
 
 def main():
-    session = Session()
+    session = SessionLocal()
     manager = TaskManager(session)
 
     while True:

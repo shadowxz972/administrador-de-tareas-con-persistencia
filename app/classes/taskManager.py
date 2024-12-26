@@ -1,6 +1,6 @@
 from sqlalchemy.exc import IntegrityError
 
-from app.database.config import Session
+from app.database.config import SessionLocal
 from app.models.Task import Task
 
 
@@ -36,7 +36,7 @@ class TaskManager:
             La sesión de SQLAlchemy utilizada para realizar las operaciones de base de datos.
     """
 
-    def __init__(self, session: Session):
+    def __init__(self, session: SessionLocal):
         self.session = session
 
     def find_task(self, task_name: str) -> Task:
