@@ -31,6 +31,12 @@ class TaskManager:
         rename_task(task: Task, new_name: str) -> None:
             Cambia el nombre de una tarea.
 
+        change_deadline(task: Task, new_deadline: str) -> None:
+            Cambia el deadline de una tarea.
+
+        change_description(task: Task, new_description: str) -> None:
+            Cambia la descripcion de una tarea.
+
     Atributos:
         session (Session):
             La sesión de SQLAlchemy utilizada para realizar las operaciones de base de datos.

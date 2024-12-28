@@ -64,7 +64,7 @@ class Task(Base):
     """
     __tablename__ = 'tasks'
 
-    # Usamos un solo guion bajo para evitar el name mangling
+    
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False, unique=True)
     description = Column(String, nullable=False)
@@ -93,6 +93,7 @@ class Task(Base):
         else:
             raise TypeError('La fecha no tiene el formato correcto dd/mm/yyyy')
 
+    # Estas funciones se activan solas cuando se cambia o ingresa un dato nueevo
     @validates("name")
     def validate_name(self, key: str, value: str) -> str:
         return validate_string_field(value, 'nombre')
